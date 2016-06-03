@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.h2.tools.RunScript;
 import org.rl.weather.forecast.dao.CityReferenceDAO;
+import org.rl.weather.forecast.exception.CityReferenceAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * Prepares the database for proper use, i.e. creates tables and fills cities that should serve as reference.
+ */
 @Component
 public class DbPreparer {
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -35,12 +37,30 @@ public class DbPreparer {
 	private CityReferenceDAO cityReferenceDAO;
 
 	@PostConstruct
-	public void init() throws IOException, SQLException {
+	public void init() {
 		createTables();
 		buildValidationTable();
 	}
 
-	private void buildValidationTable() throws SQLException {
+	/**
+	 * Creates all the tables based on create-db.sql
+	 */
+	public void createTables() {
+		try (Reader r = new InputStreamReader(getClass().getResourceAsStream("/db/create-db.sql"), StandardCharsets.UTF_8)) {
+			RunScript.execute(con, r);
+		} catch (IOException | SQLException e) {
+			logger.error("Error creating default tables, exiting...", e);
+			System.exit(1);
+		}
+	}
+
+	/**
+	 * Builds the city reference table by importing the json file given by open weather map.
+	 * @see <a href="http://openweathermap.org/forecast16">Weaher api</a> for the instructions:
+	 * List of city ID city.list.json.gz can be downloaded here
+	 * <a href="http://bulk.openweathermap.org/sample/">http://bulk.openweathermap.org/sample/</a>
+	 */
+	private void buildValidationTable() {
 		if (cityReferenceDAO.isCityReferenceFilled()) {
 			return;
 		}
@@ -63,26 +83,18 @@ public class DbPreparer {
 					logger.debug("Adding city '{}'", v.get("name").textValue());
 					try {
 						cityReferenceDAO.insertCityReference(v.get("_id").asInt(), v.get("name").textValue(), v.get("country").textValue());
-					} catch (SQLException e) {
-						if ("23505".equals(e.getSQLState())) { //ignore non unique city names as we cannot register cities with repeated names
+					} catch (CityReferenceAccessException e) {
+						if ("23505".equals(e.getErrorCode())) { //ignore non unique city names as we cannot register cities with repeated names
 							continue;
 						}
 						throw e;
 					}
 				}
 			}
-		} catch (IOException | SQLException e) {
-			logger.error("Should not reach this point!", e); //TODO Check log comment
+		} catch (IOException | CityReferenceAccessException e) {
+			logger.error("Error adding city references to database", e);
 			System.exit(1);
 		}
 		logger.info("Finished filling reference cities.");
-	}
-
-	public void createTables() throws IOException, SQLException {
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(getClass().getResource("/db/create-db.sql").toURI()), StandardCharsets.UTF_8)) {
-			RunScript.execute(con, reader);
-		} catch (URISyntaxException e) {
-			logger.error("Should not reach this point!", e);
-		}
 	}
 }

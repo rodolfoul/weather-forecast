@@ -3,27 +3,12 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>Cidades</title>
+
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/index-styles.css">
+
 	<script src="https://cdn.jsdelivr.net/angularjs/1.5.5/angular.min.js"></script>
-	<style>
-		.angular-main {
-			width: 350px;
-			display: inline-block;
-		}
-
-		.alert-danger {
-			text-align: center;
-			margin-bottom: 0px;
-		}
-
-		#cities {
-			cursor: default;
-		}
-
-		body {
-			text-align: center;
-		}
-	</style>
+	<script src="js/index-app.js"></script>
 </head>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl" class="angular-main">
@@ -43,43 +28,5 @@
 		   href="detalhes.html?city={{city}}">{{city}}</a>
 	</div>
 </div>
-
-<script>
-	//TODO colocar em arquivo separado
-	var app = angular.module('myApp', []);
-	app.controller('myCtrl', function ($scope, $http) {
-		$scope.city = 'Curitiba';
-		$scope.errorDisplay = false;
-		$http.get('rest/cidades-cadastradas')
-				.then(function (response) {
-					$scope.cities = response.data;
-				});
-
-		$scope.submitCity = function () {
-			$http.post('rest/cadastrar-cidade/', $scope.cityName)
-					.then(function (response) {
-						$scope.errorDisplay = false;
-						$scope.cityName = '';
-						$scope.cities = response.data;
-					}, function (response) {
-						$scope.errorDisplay = true;
-						$scope.cityName = '';
-						if (response.status == 404) {
-							$scope.errorString = 'Cidade não encontrada!'
-						} else if (response.status == 400) {
-							$scope.errorString = 'Nome não preenchido.'
-						} else if (response.status == 409) {
-							$scope.errorString = 'Cidade já registrada.'
-						}
-					});
-		};
-
-		$scope.processEnter = function ($event) {
-			if ($event.keyCode == 13) {
-				$scope.submitCity();
-			}
-		};
-	})
-</script>
 </body>
 </html>

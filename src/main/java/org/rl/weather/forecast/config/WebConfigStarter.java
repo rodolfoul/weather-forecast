@@ -1,8 +1,5 @@
-package org.rl.weather.forecast;
+package org.rl.weather.forecast.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,13 +19,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Responsible for configuring spring (DB startup/connection, default domain mappings)
+ */
 @Configuration
 @EnableWebMvc
 @EnableAutoConfiguration
 @ComponentScan
 public class WebConfigStarter extends WebMvcConfigurerAdapter {
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
+//TODO Comment every piece of code
+	//TODO Execute cleanup and analysis
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -55,9 +55,5 @@ public class WebConfigStarter extends WebMvcConfigurerAdapter {
 		Connection con = DriverManager.getConnection("jdbc:h2:file:" + h2File, "sa", "sa");
 
 		return con;
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(WebConfigStarter.class, args);
 	}
 }

@@ -10,14 +10,10 @@ import java.util.List;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DayForecast {
-	//TODO remover
-//	@JsonDeserialize(using = IntToInstantDeserializer.class)
-//	private Instant dt;
 	private Temperature temp;
 	private String pressure;
 	private String humidity;
 	private String speed;
-	private String deg;
 	private String clouds;
 	private List<Weather> weather;
 }

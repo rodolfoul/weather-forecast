@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Getter
 @Setter
 @AllArgsConstructor
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "City not found")
-public class InvalidCityNameException extends RuntimeException {
+@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "Invalid city name")
+public class InvalidCityException extends RuntimeException {
 	private String searchedName;
 }
