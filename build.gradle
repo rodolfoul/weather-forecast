@@ -28,6 +28,8 @@ dependencies {
     compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.23'
 
     compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
+
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
     compile group: 'com.h2database', name: 'h2', version: '1.4.192'
 

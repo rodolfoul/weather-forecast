@@ -15,7 +15,7 @@ import java.util.List;
 public class WeatherService {
 
 	@Autowired
-	private WeatherForecastClient weatherApiClient;
+	private WeatherForecastApiClient weatherApiClient;
 
 	@Autowired
 	private CityDAO cityDAO;

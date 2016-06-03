@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
  * Serves the purpose of accessing the weather forecast service
  */
 @Service
-public class WeatherForecastClient {
+public class WeatherForecastApiClient {
 	private final String apiKey = "eb8b1a9405e659b2ffc78f0a520b1a46";
 
 	private final Client apiClient;
@@ -21,7 +21,7 @@ public class WeatherForecastClient {
 	private final WebTarget dailyForecastById;
 
 
-	public WeatherForecastClient() {
+	public WeatherForecastApiClient() {
 		apiClient = ClientBuilder.newClient().register(JacksonFeature.class);
 		mainTarget = apiClient.target("http://api.openweathermap.org/data/2.5/forecast").queryParam("appid", apiKey).queryParam("mode", "json");
 		dailyForecastById = mainTarget.path("daily").queryParam("cnt", 5).queryParam("units", "metric");

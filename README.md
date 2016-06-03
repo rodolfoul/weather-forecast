@@ -6,6 +6,8 @@ Para que seja possível compilar o projeto utilizando uma IDE como o eclipse ou 
 a compilação já funciona normalmente se feita diretamente pelo gradle.
 - [Instalação no Eclipse, intellij e outras IDEs](https://projectlombok.org/download.html)
 
+Feito a instalação e configuração do plugin, basta fazer a importação normal do projeto pela tela da IDE escolhida.
+
 ## Rodar o projeto:
 Para rodar o projeto, navegar até a pasta raiz do projeto e executar o comando `java -jar build\libs\weather-forecast-1.0.jar`
 
