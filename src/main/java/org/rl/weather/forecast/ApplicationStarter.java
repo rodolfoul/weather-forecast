@@ -1,4 +1,4 @@
-package org.rl.weather.forecast.config;
+package org.rl.weather.forecast;
 
 import org.springframework.boot.SpringApplication;
 
@@ -7,6 +7,6 @@ import org.springframework.boot.SpringApplication;
  */
 public class ApplicationStarter {
 	public static void main(String[] args) {
-		SpringApplication.run(WebConfigStarter.class, args);
+		SpringApplication.run(WebConfig.class, args);
 	}
 }

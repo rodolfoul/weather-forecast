@@ -29,6 +29,7 @@ public class WeatherForecastClient {
 
 	/**
 	 * Gets a 5 day forecast based on a city id.
+	 *
 	 * @param id the city id from which the forecast should be taken.
 	 * @return The forecast response.
 	 */

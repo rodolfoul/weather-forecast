@@ -1,4 +1,4 @@
-package org.rl.weather.forecast.config;
+package org.rl.weather.forecast;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -26,9 +26,7 @@ import java.sql.SQLException;
 @EnableWebMvc
 @EnableAutoConfiguration
 @ComponentScan
-public class WebConfigStarter extends WebMvcConfigurerAdapter {
-//TODO Comment every piece of code
-	//TODO Execute cleanup and analysis
+public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -52,8 +50,7 @@ public class WebConfigStarter extends WebMvcConfigurerAdapter {
 	@Bean
 	public Connection getDbConnection() throws SQLException, IOException {
 		Path h2File = Paths.get(System.getProperty("java.io.tmpdir"), "weather-forecast.tmp").normalize();
-		Connection con = DriverManager.getConnection("jdbc:h2:file:" + h2File, "sa", "sa");
 
-		return con;
+		return DriverManager.getConnection("jdbc:h2:file:" + h2File, "sa", "sa");
 	}
 }

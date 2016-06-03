@@ -52,7 +52,7 @@ public class CityReferenceDAO {
 			ps.setString(1, name);
 
 			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
+				if (rs.next()) {
 					return rs.getInt("api_id");
 				}
 			}

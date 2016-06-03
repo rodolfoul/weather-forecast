@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Detalhes</title>
+	<title>Previsão</title>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
@@ -14,7 +14,9 @@
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
 
-	<h1>Previsão {{city}}</h1>
+	<h1 ng-show="!errorDisplay">Previsão {{city}}</h1>
+	<div ng-show="errorDisplay" class="alert alert-danger">{{errorString}}</div>
+
 	<div class="row">
 		<div class="day" ng-repeat="forecast in resp.list" >
 			<div class="thumbnail">

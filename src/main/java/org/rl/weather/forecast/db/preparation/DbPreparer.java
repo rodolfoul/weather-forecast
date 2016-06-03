@@ -56,6 +56,7 @@ public class DbPreparer {
 
 	/**
 	 * Builds the city reference table by importing the json file given by open weather map.
+	 *
 	 * @see <a href="http://openweathermap.org/forecast16">Weaher api</a> for the instructions:
 	 * List of city ID city.list.json.gz can be downloaded here
 	 * <a href="http://bulk.openweathermap.org/sample/">http://bulk.openweathermap.org/sample/</a>

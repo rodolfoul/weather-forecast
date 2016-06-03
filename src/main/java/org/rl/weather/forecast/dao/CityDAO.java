@@ -23,7 +23,6 @@ public class CityDAO {
 	@Autowired
 	private Connection con;
 
-	//TODO Mudar arquitetura para selecionar case insensitive
 	public void registerCity(String cityName) {
 		try (PreparedStatement ps = con.prepareStatement("INSERT INTO city VALUES (?)")) {
 

@@ -1,9 +1,7 @@
 package org.rl.weather.forecast.controller;
 
-import org.rl.weather.forecast.dao.CityDAO;
-import org.rl.weather.forecast.dao.CityReferenceDAO;
 import org.rl.weather.forecast.dto.DailyWeatherResponse;
-import org.rl.weather.forecast.service.WeatherForecastClient;
+import org.rl.weather.forecast.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,23 +20,17 @@ import java.util.List;
 public class WeatherRestController {
 
 	@Autowired
-	private WeatherForecastClient weatherApiClient;
-
-	@Autowired
-	private CityDAO cityDAO;
-
-	@Autowired
-	private CityReferenceDAO referenceDAO;
+	private WeatherService weatherService;
 
 	/**
 	 * Gets the effective forecast based on a city name. Checks for a valid city name.
+	 *
 	 * @return Response with weather forecast plus additional data.
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/previsão/{cityName}", method = RequestMethod.GET)
 	public DailyWeatherResponse getForecast(@PathVariable String cityName) {
-		int cityId = referenceDAO.getCityId(cityName);
-		return weatherApiClient.forecastById(cityId);
+		return weatherService.getForecast(cityName);
 	}
 
 	/**
@@ -47,17 +39,17 @@ public class WeatherRestController {
 	@ResponseBody
 	@RequestMapping(value = "/cidades-cadastradas", method = RequestMethod.GET)
 	public List<String> getCities() {
-		return cityDAO.listCities();
+		return weatherService.listCities();
 	}
 
 	/**
 	 * Effectively register a given city name to the database.
+	 *
 	 * @return The new list of registered cities.
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/cadastrar-cidade", method = RequestMethod.POST)
 	public List<String> registerCity(@RequestBody String cityName) {
-		cityDAO.registerCity(cityName);
-		return getCities();
+		return weatherService.registerCity(cityName);
 	}
 }
