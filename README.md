@@ -21,7 +21,7 @@ ao levantar a aplicação na tabela `city_reference` onde encontramos o `id` do 
 O sistema utiliza spring boot para facilitar o desenvolvimento rápido de uma aplicação simples que está de acordo com o nosso caso. Pelo
 spring boot temos também a disposição o sistema de log do slf4j, spring MVC que no nosso caso nos facilitarão o desenvolvimento. 
 
-### Arquitetura "MVW"
+### Arquitetura "MVC"
 No backend foi utilizado o servidor de aplicações Tomcat que responde as chamadas REST do cliente feito pelo frontend em AngularJS.
 Isto é, todas as chamadas a api do Open Weather Map são feitas em java utilizando a biblioteca Jersey, que devolve para o controlador do spring MVC,
 que por sua vez devolve o modelo através da interface REST para o cliente AngularJS.
