@@ -2,7 +2,7 @@ package org.rl.weather.forecast.dao;
 
 import org.rl.weather.forecast.exception.CityAccessException;
 import org.rl.weather.forecast.exception.CityReferenceAccessException;
-import org.rl.weather.forecast.exception.InvalidCityException;
+import org.rl.weather.forecast.exception.InvalidCityNameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -59,6 +59,6 @@ public class CityReferenceDAO {
 		} catch (SQLException e) {
 			throw new CityAccessException(e);
 		}
-		throw new InvalidCityException(name);
+		throw new InvalidCityNameException(name);
 	}
 }

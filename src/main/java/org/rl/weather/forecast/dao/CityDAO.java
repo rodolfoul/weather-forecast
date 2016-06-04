@@ -2,7 +2,7 @@ package org.rl.weather.forecast.dao;
 
 import org.rl.weather.forecast.exception.CityAccessException;
 import org.rl.weather.forecast.exception.CityAlreadyRegisteredException;
-import org.rl.weather.forecast.exception.InvalidCityException;
+import org.rl.weather.forecast.exception.InvalidCityNameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +30,7 @@ public class CityDAO {
 			ps.execute();
 		} catch (SQLException e) {
 			if ("23506".equals(e.getSQLState())) {
-				throw new InvalidCityException(cityName);
+				throw new InvalidCityNameException(cityName);
 			} else if ("23505".equals(e.getSQLState())) {
 				throw new CityAlreadyRegisteredException(cityName);
 			}
@@ -50,5 +50,14 @@ public class CityDAO {
 			throw new CityAccessException(e);
 		}
 		return cities;
+	}
+
+	public void deleteCity(String name) {
+		try (PreparedStatement ps = con.prepareStatement("DELETE FROM city WHERE name = ?")) {
+			ps.setString(1, name);
+			ps.execute();
+		} catch (SQLException e) {
+			throw new CityAccessException(e);
+		}
 	}
 }

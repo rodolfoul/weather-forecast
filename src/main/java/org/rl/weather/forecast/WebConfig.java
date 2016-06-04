@@ -50,7 +50,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public Connection getDbConnection() throws SQLException, IOException {
 		Path h2File = Paths.get(System.getProperty("java.io.tmpdir"), "weather-forecast.tmp").normalize();
-
 		return DriverManager.getConnection("jdbc:h2:file:" + h2File, "sa", "sa");
 	}
 }

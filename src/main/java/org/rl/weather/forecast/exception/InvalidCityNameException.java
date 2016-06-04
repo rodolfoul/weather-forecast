@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 @AllArgsConstructor
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "Invalid city name")
-public class InvalidCityException extends RuntimeException {
+public class InvalidCityNameException extends RuntimeException {
 	private String searchedName;
 }
