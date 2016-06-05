@@ -37,3 +37,8 @@ Para utilizar o sistema basta acessar o browser e entrar com a URL `http://local
 sistema e ainda possibilita o cadastro de mais cidades se desejado.
 
 Ao clicar no nome de aluma das cidades cadastradas, é mostrada a previsão do tempo de 5 dias (Hoje mais 4 dias para frente).
+
+## Sugestões para atualização do projeto não previstas no enunciado
+- Criação de um botão para remover cada cidade cadastrada
+- Utilizar Cidade/País para busca de cidades, visto que podem existir cidades repetidas em diferentes países
+- Utilização de busca de cidade *case insensitive*
