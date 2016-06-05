@@ -21,6 +21,7 @@
 		<div class="day" ng-repeat="forecast in resp.list" >
 			<div class="thumbnail">
 				<div class="caption">
+					<p class="date">{{ moment().add($index, 'days').format('ddd')}}</p>
 					<img ng-src="http://openweathermap.org/img/w/{{forecast.weather[0].icon}}.png">
 					<p><span class="min-temp">{{ forecast.temp.min }} ℃</span> |
 					<span class="max-temp">{{ forecast.temp.max }} ℃</span></p>
